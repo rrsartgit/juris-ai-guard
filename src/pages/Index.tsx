@@ -40,7 +40,7 @@ const Index = () => {
             clients(first_name, last_name),
             law_firms(name)
           `)
-          .or(`client_id.in.(select id from clients where user_id = '${user.id}'),law_firm_id.in.(select id from law_firms where id = '${profileData?.law_firm_id}')`)
+          .or(`client_id.in.(select id from clients where user_id = '${user.id}'),law_firm_id.eq.${profileData?.law_firm_id}`)
           .order('created_at', { ascending: false });
 
         setCases(casesData || []);
