@@ -48,22 +48,8 @@ const AIAssistant = ({ caseId, conversationId }: AIAssistantProps) => {
 
   const loadConversationHistory = async () => {
     try {
-      const { data: messagesData, error } = await supabase
-        .from('ai_messages')
-        .select('*')
-        .eq('conversation_id', currentConversationId)
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-
-      setMessages(messagesData.map(msg => ({
-        id: msg.id,
-        role: msg.role as 'user' | 'assistant',
-        content: msg.content,
-        timestamp: new Date(msg.created_at),
-        sourcesCount: msg.metadata?.sources_used,
-        aiProvider: msg.metadata?.ai_provider
-      })));
+      // For now, show a placeholder until AI messages are properly implemented
+      setMessages([]);
     } catch (error: any) {
       console.error('Error loading conversation:', error);
     }

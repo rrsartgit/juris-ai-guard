@@ -49,10 +49,10 @@ const DocumentUploader = ({ caseId, onUploadComplete }: DocumentUploaderProps) =
         .insert({
           case_id: caseId,
           title: file.name,
+          name: file.name,
           file_path: filePath,
           file_size: file.size,
-          mime_type: file.type,
-          status: 'uploaded'
+          mime_type: file.type
         })
         .select()
         .single();
