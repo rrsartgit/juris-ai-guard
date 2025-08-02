@@ -14,6 +14,76 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_conversations: {
+        Row: {
+          case_id: string
+          created_at: string
+          id: string
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          case_id: string
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          case_id?: string
+          created_at?: string
+          id?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_conversations_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          role: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          role: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       case_notes: {
         Row: {
           author_id: string
@@ -204,6 +274,7 @@ export type Database = {
           id: string
           mime_type: string | null
           name: string
+          title: string
           uploaded_by: string | null
         }
         Insert: {
@@ -215,6 +286,7 @@ export type Database = {
           id?: string
           mime_type?: string | null
           name: string
+          title: string
           uploaded_by?: string | null
         }
         Update: {
@@ -226,6 +298,7 @@ export type Database = {
           id?: string
           mime_type?: string | null
           name?: string
+          title?: string
           uploaded_by?: string | null
         }
         Relationships: [
@@ -287,6 +360,47 @@ export type Database = {
         }
         Relationships: []
       }
+      processing_queue: {
+        Row: {
+          created_at: string
+          document_id: string | null
+          error_message: string | null
+          id: string
+          status: string
+          task_data: Json | null
+          task_type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          document_id?: string | null
+          error_message?: string | null
+          id?: string
+          status?: string
+          task_data?: Json | null
+          task_type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          document_id?: string | null
+          error_message?: string | null
+          id?: string
+          status?: string
+          task_data?: Json | null
+          task_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "processing_queue_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -342,6 +456,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      enqueue_document_processing: {
+        Args: {
+          p_document_id: string
+          p_task_type?: string
+          p_task_data?: Json
+        }
+        Returns: string
+      }
       get_user_law_firm: {
         Args: { user_uuid: string }
         Returns: string
