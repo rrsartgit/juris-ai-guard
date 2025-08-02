@@ -53,6 +53,20 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Legal theme colors */
+    --navy: 224 51% 15%;
+    --navy-light: 224 43% 25%;
+    --gold: 45 85% 55%;
+    --gold-light: 45 85% 65%;
+
+    /* Gradients for legal theme */
+    --gradient-legal: linear-gradient(135deg, hsl(var(--navy)), hsl(var(--navy-light)));
+    --gradient-legal-hover: linear-gradient(135deg, hsl(var(--navy-light)), hsl(var(--gold) / 0.2));
+    
+    /* Shadows */
+    --shadow-legal: 0 8px 32px hsl(var(--navy) / 0.3);
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--navy) / 0.2);
   }
 
   .dark {
